@@ -1,16 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 const app = express();
-const port = 5001;
+dotenv.config();
 
-app.listen(port, () => {
-  console.log(`app listen port ${port} `);
+app.listen(process.env.USER_ID, () => {
+  console.log(`app listen port ${process.env.PORT} `);
 });
 
-mongoose.connect(
-  `mongodb+srv://adhilmuhammed:0077@cluster0.wlmf4ls.mongodb.net/test`
-);
+mongoose.connect(process.env.URI);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
