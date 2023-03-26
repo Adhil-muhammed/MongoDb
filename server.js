@@ -1,18 +1,40 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import {
+  router,
+  getPost,
+  createPost,
+  deletePost,
+  updatePost,
+  getPostById,
+} from "./routes/router.js";
 
 const app = express();
-dotenv.config();
+const db = mongoose.connection;
 
-app.listen(process.env.USER_ID, () => {
-  console.log(`app listen port ${process.env.PORT} `);
-});
+dotenv.config();
+app.use(express.json());
+app.use("/api", router);
 
 mongoose.connect(process.env.URI);
 
-const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", function () {
+
+db.once("open", () => {
   console.log("Connected successfully");
+});
+
+router.post("/post", (req, res) => getPost(req, res));
+
+router.get("/getAll", (req, res) => createPost(req, res));
+
+router.put("/update", (req, res) => updatePost(req, res));
+
+router.delete("/post/:id", (req, res) => deletePost(req, res));
+
+router.get("/getById/:id", (req, res) => getPostById(req, res));
+
+app.listen(5000, () => {
+  console.log("sever connected successfully");
 });
