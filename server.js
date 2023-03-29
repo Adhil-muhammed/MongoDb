@@ -16,6 +16,7 @@ const db = mongoose.connection;
 dotenv.config();
 app.use(express.json());
 app.use("/api", router);
+// app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.URI);
 
@@ -25,9 +26,9 @@ db.once("open", () => {
   console.log("Connected successfully");
 });
 
-router.post("/post", (req, res) => getPost(req, res));
+router.get("/getAll", (req, res) => getPost(req, res));
 
-router.get("/getAll", (req, res) => createPost(req, res));
+router.post("/post", (req, res) => createPost(req, res));
 
 router.put("/update", (req, res) => updatePost(req, res));
 

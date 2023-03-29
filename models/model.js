@@ -1,12 +1,19 @@
 import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema({
-  title: String, // String is shorthand for {type: String}
+  title: String,
   author: String,
   body: String,
-  comments: [{ body: String, date: Date }],
+  comments: [
+    {
+      comment: String,
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   date: { type: Date, default: Date.now },
-  hidden: Boolean,
   meta: {
     votes: Number,
     favs: Number,
