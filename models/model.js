@@ -37,7 +37,7 @@ const MySchema = new Schema({
   },
   userId: {
     type: Number,
-    min: 10,
+    minlength: 10,
     maxlength: 20,
     required: true,
   },
@@ -45,8 +45,31 @@ const MySchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  vehicle_status: {
+    type: Boolean,
+  },
+});
+
+const Role = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
+const User = new Schema({
+  username: String,
+  email: String,
+  password: String,
+  roles: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
+    },
+  ],
 });
 
 export const TaskModel = model("userdetails", MySchema);
-
 export const Blog = mongoose.model("Blog", blogSchema);
+export const UserRole = model("Role", Role);
+export const Users = model("User", User);
