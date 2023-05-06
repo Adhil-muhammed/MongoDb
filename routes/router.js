@@ -1,5 +1,5 @@
 import express from "express";
-import { Blog } from "../models/model.js";
+import { Blog, TaskModel } from "../models/model.js";
 
 const app = express;
 
@@ -20,24 +20,33 @@ export const getPostById = (req, res) => {
   res.send("hy lam wick jhone wick");
 };
 
-export const createPost = async (req, res) => {
-  const post = new Blog({
-    title: req.body.title,
-    comments: [{ comment: req.body.comment }],
-    author: req.body.author,
-    body: req.body.body,
-    meta: {
-      favs: req.body.favs,
-      votes: req.body.votes,
-    },
-  });
-
+export const createUser = async (req, res) => {
   try {
-    const dataToSave = await post.save();
-
-    res.status(201).json(dataToSave);
+    const taskData = await req.body;
+    await TaskModel.create(taskData)
+      .then((createdTask) => {
+        if (!createdTask)
+          return res.status(404).json({
+            success: false,
+            message: "Task creation failed",
+            error: "Unable get created task",
+          });
+        res.status(201).json({
+          success: true,
+          createdTask,
+        });
+      })
+      .catch((error) => {
+        res.status(404).json({
+          success: false,
+          error: error.message,
+        });
+      });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
