@@ -60,13 +60,13 @@ const Role = new Schema({
 const User = new Schema({
   username: String,
   email: String,
-  password: String,
-  roles: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Role",
-    },
-  ],
+  // password: String,
+  // roles: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Role",
+  //   },
+  // ],
 });
 
 export const TaskModel = model("userdetails", MySchema);

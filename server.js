@@ -10,6 +10,8 @@ import {
   getPostById,
   createRole,
 } from "./routes/router.js";
+import { checkDuplicateUsernameOrEmail } from "./middlewares/verifySignUp.js";
+import { signUp } from "./auth/auth.js";
 
 const app = express();
 const db = mongoose.connection;
@@ -42,6 +44,11 @@ router.delete("/post/:id", (req, res) => deletePost(req, res));
 router.get("/getById/:id", (req, res) => getPostById(req, res));
 
 router.get("/createRole", (req, res) => createRole(req, res));
+
+// USER AUTHENTICATION
+router.post("/signUp", checkDuplicateUsernameOrEmail, (req, res) =>
+  signUp(req, res)
+);
 
 app.listen(8080, () => {
   console.log("sever connected successfully");
