@@ -5,6 +5,7 @@ const app = express;
 
 export const router = app.Router();
 
+// GET ALL USER
 export const getUser = async (req, res) => {
   try {
     TaskModel.find()
@@ -24,6 +25,7 @@ export const getUser = async (req, res) => {
   } catch (error) {}
 };
 
+//  GET USER BY ID
 export const getPostById = async (req, res) => {
   try {
     await TaskModel.findById(req.params.id)
@@ -47,6 +49,7 @@ export const getPostById = async (req, res) => {
   }
 };
 
+// CREATE USER
 export const createUser = async (req, res) => {
   try {
     const taskData = await req.body;
@@ -77,14 +80,40 @@ export const createUser = async (req, res) => {
   }
 };
 
-export const updateUser = (req, res) => {
-  res.send("hy lam wick jhone wick");
+// UPDATE USER
+export const updateUser = async (req, res) => {
+  try {
+    const id = await req.params.id;
+    const updateData = await req.body;
+
+    await TaskModel.findByIdAndUpdate(id, updateData, { new: true })
+      .then((updateUser, err) => {
+        res.status(200).json({
+          success: true,
+          message: "Updation successfully compleated",
+          updateUser,
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        res.status(400).json({
+          success: false,
+          message: "ERROR",
+        });
+      });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
 };
 
 export const deletePost = (req, res) => {
   res.send("hy lam wick jhone wick");
 };
 
+// CREATE USER ROLES
 export const createRole = (req, res) => {
   try {
     UserRole.estimatedDocumentCount()
