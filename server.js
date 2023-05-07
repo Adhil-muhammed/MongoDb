@@ -46,7 +46,7 @@ router.get("/getById/:id", (req, res) => getPostById(req, res));
 router.get("/createRole", (req, res) => createRole(req, res));
 
 // USER AUTHENTICATION
-router.post("/signUp", checkDuplicateUsernameOrEmail, (req, res) =>
+router.post("/register", checkDuplicateUsernameOrEmail, (req, res) =>
   signUp(req, res)
 );
 
