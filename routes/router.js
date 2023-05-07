@@ -77,7 +77,7 @@ export const createUser = async (req, res) => {
   }
 };
 
-export const updatePost = (req, res) => {
+export const updateUser = (req, res) => {
   res.send("hy lam wick jhone wick");
 };
 

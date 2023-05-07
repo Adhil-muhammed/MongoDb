@@ -6,7 +6,7 @@ import {
   getUser,
   createUser,
   deletePost,
-  updatePost,
+  updateUser,
   getPostById,
   createRole,
 } from "./routes/router.js";
@@ -35,7 +35,7 @@ router.get("/getAll", (req, res) => getUser(req, res));
 
 router.post("/create", (req, res) => createUser(req, res));
 
-router.put("/update", (req, res) => updatePost(req, res));
+router.put("/updateUser", (req, res) => updateUser(req, res));
 
 router.delete("/post/:id", (req, res) => deletePost(req, res));
 
