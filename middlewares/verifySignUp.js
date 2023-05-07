@@ -9,7 +9,6 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
       .exec()
       .then((isUsername) => {
         if (isUsername) {
-          //   console.log("isUsername: ", isUsername);
           req.UserExist = false;
         }
       })
@@ -24,7 +23,6 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
       .then((isEmail) => {
         if (isEmail) {
           req.UserEmailExist = false;
-          //   console.log("isEmail: ", isEmail);
         }
       })
       .catch(() => {
@@ -40,16 +38,16 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
         message: "user name is alredy exist",
       });
     }
-    if (!req.UserExist && !req.UserEmailExist) {
-      return res.status(400).json({
-        success: false,
-        message: "user name and email alredy exist",
-      });
-    }
     if (!req.UserEmailExist) {
       return res.status(400).json({
         success: false,
         message: "email is alredy exist",
+      });
+    }
+    if (!req.UserExist && !req.UserEmailExist) {
+      return res.status(400).json({
+        success: false,
+        message: "user name and email alredy exist",
       });
     }
     if (req.UserExist && req.UserEmailExist) {
