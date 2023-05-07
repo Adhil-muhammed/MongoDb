@@ -58,7 +58,10 @@ const Role = new Schema({
 });
 
 const User = new Schema({
-  username: String,
+  username: {
+    type: String,
+    uppercase: true,
+  },
   email: String,
   // password: String,
   // roles: [
