@@ -4,15 +4,13 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   try {
     req.UserExist = true;
     req.UserEmailExist = true;
+
     await Users.findOne({ username: req.body.username })
       .exec()
       .then((isUsername) => {
         if (isUsername) {
+          //   console.log("isUsername: ", isUsername);
           req.UserExist = false;
-          res.status(400).json({
-            success: false,
-            message: "user name is alredy exist",
-          });
         }
       })
       .catch(() => {
@@ -22,32 +20,43 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
         });
       });
     // EMAIL;
-    // Users.findOne({ email: req.body.email })
-    //   .then((isEmail) => {
-    //     if (isEmail) {
-    //       console.log("isEmail: ", isEmail);
-    //       req.UserEmailExist = false;
-    //       res.status(400).json({
-    //         success: false,
-    //         message: "email is alredy exist",
-    //       });
-    //     }
-    //   })
-    //   .catch(() => {
-    //     res.status(500).json({
-    //       success: false,
-    //       message: "internal server error",
-    //     });
-    //   });
+    await Users.findOne({ email: req.body.email })
+      .then((isEmail) => {
+        if (isEmail) {
+          req.UserEmailExist = false;
+          //   console.log("isEmail: ", isEmail);
+        }
+      })
+      .catch(() => {
+        res.status(500).json({
+          success: false,
+          message: "internal server error",
+        });
+      });
 
-    if (req.UserExist) {
+    if (!req.UserExist) {
+      return res.status(400).json({
+        success: false,
+        message: "user name is alredy exist",
+      });
+    }
+    if (!req.UserExist && !req.UserEmailExist) {
+      return res.status(400).json({
+        success: false,
+        message: "user name and email alredy exist",
+      });
+    }
+    if (!req.UserEmailExist) {
+      return res.status(400).json({
+        success: false,
+        message: "email is alredy exist",
+      });
+    }
+    if (req.UserExist && req.UserEmailExist) {
       next();
     }
   } catch (error) {
-    res?.status(500).json({
-      success: false,
-      message: "function not excuted",
-    });
+    res?.status(500).json({});
   }
 };
 
