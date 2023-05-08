@@ -12,5 +12,20 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
-  }
+  },
+  "name": "mongodb",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adhil-muhammed/MongoDb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adhil-muhammed/MongoDb/issues"
+  },
+  "homepage": "https://github.com/Adhil-muhammed/MongoDb#readme",
+  "description": ""
 }

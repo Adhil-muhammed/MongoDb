@@ -32,6 +32,13 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
         });
       });
 
+    if (!req.UserExist && !req.UserEmailExist) {
+      return res.status(400).json({
+        success: false,
+        message: "user name and email alredy exist",
+      });
+    }
+
     if (!req.UserExist) {
       return res.status(400).json({
         success: false,
@@ -44,12 +51,7 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
         message: "email is alredy exist",
       });
     }
-    if (!req.UserExist && !req.UserEmailExist) {
-      return res.status(400).json({
-        success: false,
-        message: "user name and email alredy exist",
-      });
-    }
+
     if (req.UserExist && req.UserEmailExist) {
       next();
     }
