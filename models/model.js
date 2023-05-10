@@ -47,6 +47,7 @@ const MySchema = new Schema({
   },
   vehicle_status: {
     type: Boolean,
+    required: true,
   },
 });
 
